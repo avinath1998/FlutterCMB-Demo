@@ -12,12 +12,8 @@ class PresentationList extends StatefulWidget {
 
   Presentation presentation;
   Meetup meetup;
-  PresentationListModel model;
 
-  PresentationList({@required this.presentation, @required this.meetup}) {
-    model = new PresentationListModel(
-        presentation: this.presentation, meetup: this.meetup);
-  }
+  PresentationList({@required this.presentation, @required this.meetup}) {}
 
   @override
   State<StatefulWidget> createState() {
@@ -28,19 +24,18 @@ class PresentationList extends StatefulWidget {
 class _PresentationListState extends State<PresentationList> {
 
   PageController pager = new PageController();
-
+  PresentationListModel model;
   @override
   void initState() {
     super.initState();
-    if (widget.model.stream == null) {
-      widget.model.currentOrderStream();
-    }
+    model = new PresentationListModel(presentation: widget.presentation, meetup: widget.meetup);
+    model.currentOrderStream();
   }
 
   @override
   void dispose() {
     super.dispose();
-    widget.model.dispose();
+    model.dispose();
   }
 
   @override
@@ -57,24 +52,24 @@ class _PresentationListState extends State<PresentationList> {
                 "Sorry, but this presentation doesn't have any timeline pages"));
           } else {
             return ScopedModel(
-                model: widget.model,
+                model: model,
                 child: ScopedModelDescendant<PresentationListModel>(
                   builder: (context, child, model) {
                     return PageView.builder(
-                      controller: widget.model.pageController,
+                      controller: model.pageController,
                       itemCount: snapshot.data.documents.length,
                       pageSnapping: true,
                       itemBuilder: (BuildContext context, int index) {
-                        if (widget.model.showErrorMessage) {
+                        if (model.showErrorMessage) {
                           return Center(
                               child: Text("Error retrieving data, try again!"));
-                        } else if (widget.model.showTimeline) {
+                        } else if (model.showTimeline) {
                           TimelinePage page = TimelinePage.fromMap(
                               snapshot.data.documents[index].data,
                               snapshot.data.documents[index].documentID);
                           return PresentationTile(timelinePage: page);
                         }
-                        return Center(child: CircularProgressIndicator());
+                        return Center(child: Text("Pading"));
                       },
                     );
                   },

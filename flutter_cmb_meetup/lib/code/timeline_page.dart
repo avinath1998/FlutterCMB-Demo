@@ -1,14 +1,12 @@
 
 
 class TimelinePage {
-  static final String TopTMiddleI = "TopTMiddleI";
-  static final String MiddleTTopI = "MiddleTTopI";
   static final String TopTMiddleIBottomT = "TopTMiddleIBottomT";
   static final String TopIMiddleTBottomT = "TopIMiddleTBottomT";
   static final String TopFMiddleTBottomI = "TopFMiddleTBottomI";
   static final String MiddleFTopT = "MiddleFTopT";
   static final String TopFMiddleT = "TopFMiddleT";
-  static final String TopFMiddleTBottomF = "TopFMiddleTBottomF";
+  static final String TopFMiddleTBottomT = "TopFMiddleTBottomT";
   static final String MiddleFMiddleT = "MiddleFMiddleT";
 
   String _id;

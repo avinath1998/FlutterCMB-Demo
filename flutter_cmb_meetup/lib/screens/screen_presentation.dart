@@ -1,17 +1,22 @@
-import 'dart:async';
-
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_cmb_meetup/code/meetup.dart';
 import 'package:flutter_cmb_meetup/code/presentation.dart';
+import 'package:flutter_cmb_meetup/code/meetup.dart';
+import 'package:flutter_cmb_meetup/code/timeline_page.dart';
 import 'package:flutter_cmb_meetup/widgets/presentation_list.dart';
+import 'package:flutter_cmb_meetup/widgets/presentation_tile.dart';
 import 'package:scoped_model/scoped_model.dart';
+import 'dart:async';
 
 
 class ScreenPresentationModel extends Model {
   Meetup meetup;
 
-  ScreenPresentationModel({@required this.meetup});
+  ScreenPresentationModel({@required this.meetup}){
+    print("Created");
+  }
 
   Presentation presentation;
   bool showPresentationList = false;
@@ -76,11 +81,8 @@ class ScreenPresentationModel extends Model {
 class ScreenPresentation extends StatefulWidget {
 
   Meetup meetup;
-  ScreenPresentationModel screenPresentationModel;
 
-  ScreenPresentation({@required this.meetup}) {
-    screenPresentationModel = new ScreenPresentationModel(meetup: this.meetup);
-  }
+  ScreenPresentation({@required this.meetup});
 
   @override
   State<StatefulWidget> createState() {
@@ -89,22 +91,26 @@ class ScreenPresentation extends StatefulWidget {
 }
 
 class _ScreenPresentationState extends State<ScreenPresentation> {
+
+  ScreenPresentationModel model;
+
   @override
   void initState() {
     super.initState();
-    widget.screenPresentationModel.initStream();
+    model = new ScreenPresentationModel(meetup: widget.meetup);
+    model.initStream();
   }
 
   @override
   void dispose() {
     super.dispose();
-    widget.screenPresentationModel.dispose();
+    model.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return ScopedModel(
-      model: widget.screenPresentationModel,
+      model: model,
       child: ScopedModelDescendant<ScreenPresentationModel>(
           builder: (context, child, model) {
             if (model.showPresentationList) {

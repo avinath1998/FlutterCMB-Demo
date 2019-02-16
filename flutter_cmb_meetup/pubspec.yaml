@@ -18,6 +18,7 @@ dependencies:
   date_format: ^1.0.6
   url_launcher: ^5.0.1
   flare_flutter: ^1.2.3
+  nima: ^1.0.2
   scoped_model: ^1.0.1
 
   flutter:
@@ -46,6 +47,8 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
    - images/presentation_one/flutter_guy.flr
+   - images/presentation_one/cmb_logo.png
+   - images/presentation_one/cmb_logo.nma
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
