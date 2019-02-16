@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_cmb_meetup/code/meetup.dart';
 import 'package:flutter_cmb_meetup/screens/screen_event_registration.dart';
 import 'package:flutter_cmb_meetup/screens/screen_root_home.dart';
