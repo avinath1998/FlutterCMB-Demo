@@ -20,6 +20,8 @@ dependencies:
   flare_flutter: ^1.2.3
   nima: ^1.0.2
   scoped_model: ^1.0.1
+  carousel_slider: ^1.0.1
+
 
   flutter:
     sdk: flutter
@@ -49,6 +51,10 @@ flutter:
    - images/presentation_one/flutter_guy.flr
    - images/presentation_one/cmb_logo.png
    - images/presentation_one/cmb_logo.nma
+   - images/presentation_one/androidvsios.flr
+   - images/presentation_one/hybrid_frameworks.flr
+
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

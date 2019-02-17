@@ -23,63 +23,149 @@ class _PresentationTileState extends State<PresentationTile> {
         .of(context)
         .size;
     if (widget.timelinePage.timelineType == TimelinePage.TopTMiddleIBottomT) {
+      return Card(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0)),
+        child: Container(
+          padding: const EdgeInsets.all(30.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Text(widget.timelinePage.textOne,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: widget.timelinePage.textOneSize,
+                      fontWeight: widget.timelinePage.textOneBold ? FontWeight
+                          .bold : FontWeight.normal
+                  )
+              ),
+              Padding(
+                  padding: const EdgeInsets.all(0.0),
+                  child: CachedNetworkImage(
+                    imageUrl: widget.timelinePage.imageOne,
+                    placeholder: Center(child: CircularProgressIndicator(),),)
+              ),
+              Text(widget.timelinePage.textTwo,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: widget.timelinePage.textTwoSize,
+                      fontWeight: widget.timelinePage.textTwoBold ? FontWeight
+                          .bold : FontWeight.normal
+                  )
+              ),
 
-    } else if (widget.timelinePage.timelineType == TimelinePage.TopIMiddleTBottomT) {
-      return Container(
-        width: screenSize.width,
-        height: screenSize.height,
-        child: Padding(
+            ],
+          ),
+        ),
+      );
+    } else
+    if (widget.timelinePage.timelineType == TimelinePage.TopIMiddleTBottomT) {
+      return Card(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0)),
+        child: Container(
+          padding: const EdgeInsets.all(30.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              CachedNetworkImage(
+                imageUrl: widget.timelinePage.imageOne,
+                placeholder: Center(child: CircularProgressIndicator()),
+              ),
+              Text(widget.timelinePage.textOne,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: widget.timelinePage.textOneSize,
+                      fontWeight: widget.timelinePage.textOneBold ? FontWeight
+                          .bold : FontWeight.normal
+                  )
+              )
+            ],
+          ),
+        ),
+      );
+    } else
+    if (widget.timelinePage.timelineType == TimelinePage.TopFMiddleTBottomT) {
+      return Card(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0)),
+        child: Container(
           padding: const EdgeInsets.all(20.0),
-          child: Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                CachedNetworkImage(
-                  imageUrl: widget.timelinePage.imageOne,
-                  placeholder: Center(child: CircularProgressIndicator()),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Container(
+                height: screenSize.height / 4,
+                child: widget.timelinePage.flareOne.contains("nma") ? NimaActor(
+                  widget.timelinePage.flareOne,
+                  animation: widget.timelinePage.flareOneAnimation,
+                  alignment: Alignment.center,
+                  fit: BoxFit.contain,
+                ) : FlareActor(
+                  widget.timelinePage.flareOne,
+                  animation: widget.timelinePage.flareOneAnimation,
+
                 ),
-                Text(widget.timelinePage.textOne,
+              ),
+              Container(
+                child: Center(
+                  child: Text(
+                    widget.timelinePage.textOne,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontSize: widget.timelinePage.textOneSize,
                         fontWeight: widget.timelinePage.textOneBold ? FontWeight
-                            .bold : FontWeight.normal
-                    )
-                )
-              ],
-            ),
+                            .bold : FontWeight.normal),
+                  ),
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: 10.0),
+                child: Center(
+                  child: Text(
+                    widget.timelinePage.textTwo,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontSize: widget.timelinePage.textTwoSize,
+                        fontWeight: widget.timelinePage.textTwoBold ? FontWeight
+                            .bold : FontWeight.normal),
+                  ),
+                ),
+              )
+            ],
           ),
         ),
       );
-    } else if (widget.timelinePage.timelineType == TimelinePage.TopFMiddleTBottomT) {
-      return Container(
-        height: screenSize.height,
-        width: screenSize.width,
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            Container(
-              padding: const EdgeInsets.all(10.0),
-              height: screenSize.height / 2,
-              child: widget.timelinePage.flareOne.contains("nma") ? NimaActor(
-                  widget.timelinePage.flareOne,
-                  animation: widget.timelinePage.flareOneAnimation,
-                  alignment: Alignment.center,
-                  fit: BoxFit.contain
-              ) : SizedBox(
+    } else
+    if (widget.timelinePage.timelineType == TimelinePage.MiddleFMiddleT) {
+      return Card(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0)),
+        child: Container(
+          padding: const EdgeInsets.all(30.0),
+          child: Row(
+            children: <Widget>[
+              Container(
                 height: screenSize.height / 2,
                 width: screenSize.width / 2,
-                child: FlareActor(
-                  widget.timelinePage.flareOne,
-                  animation: widget.timelinePage.flareOneAnimation,
+                child: widget.timelinePage.flareOne.contains("nma") ? NimaActor(
+                    widget.timelinePage.flareOne,
+                    animation: widget.timelinePage.flareOneAnimation,
+                    alignment: Alignment.center,
+                    fit: BoxFit.contain
+                ) : Container(
+                  height: screenSize.height / 2,
+                  width: screenSize.width / 2,
+                  child: FlareActor(
+                    widget.timelinePage.flareOne,
+                    animation: widget.timelinePage.flareOneAnimation,
+                  ),
                 ),
               ),
-            ),
-            Container(
-              padding: const EdgeInsets.all(10.0),
-              height: screenSize.height / 4,
-              child: Center(
+              Container(
+                width: screenSize.width / 2,
+                alignment: Alignment.center,
                 child: Text(
                   widget.timelinePage.textOne,
                   textAlign: TextAlign.center,
@@ -88,60 +174,28 @@ class _PresentationTileState extends State<PresentationTile> {
                       fontWeight: widget.timelinePage.textOneBold ? FontWeight
                           .bold : FontWeight.normal),
                 ),
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.all(10.0),
-              height: screenSize.height / 4,
-              child: Center(
-                child: Text(
-                  widget.timelinePage.textTwo,
-                  style: TextStyle(
-                      fontSize: widget.timelinePage.textTwoSize,
-                      fontWeight: widget.timelinePage.textTwoBold ? FontWeight
-                          .bold : FontWeight.normal),
-                ),
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ),
       );
-    } else if (widget.timelinePage.timelineType == TimelinePage.MiddleFMiddleT) {
-      return Container(
-        height: screenSize.height,
-        width: screenSize.width,
-        child: Row(
-          children: <Widget>[
-            Container(
-              height: screenSize.height / 2,
-              width: screenSize.width / 2,
-              child: widget.timelinePage.flareOne.contains("nma") ? NimaActor(
-                  widget.timelinePage.flareOne,
-                  animation: widget.timelinePage.flareOneAnimation,
-                  alignment: Alignment.center,
-                  fit: BoxFit.contain
-              ) : Container(
-                height: screenSize.height / 2,
-                width: screenSize.width / 2,
-                child: FlareActor(
-                  widget.timelinePage.flareOne,
-                  animation: widget.timelinePage.flareOneAnimation,
-                ),
+    }else if(widget.timelinePage.timelineType == TimelinePage.TopIMiddleI){
+      return Card(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0)),
+          child: Container(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              CachedNetworkImage(
+                imageUrl: widget.timelinePage.imageOne,
               ),
-            ),
-            Container(
-              width: screenSize.width / 2,
-              alignment: Alignment.center,
-              child: Text(
-                widget.timelinePage.textOne,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: widget.timelinePage.textOneSize,
-                    fontWeight: widget.timelinePage.textOneBold ? FontWeight
-                        .bold : FontWeight.normal),
-              ),
-            )
-          ],
+              CachedNetworkImage(
+                imageUrl: widget.timelinePage.imageTwo,
+              )
+            ],
+          ),
         ),
       );
     } else {

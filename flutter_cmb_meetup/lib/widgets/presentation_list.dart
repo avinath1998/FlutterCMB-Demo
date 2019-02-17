@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cmb_meetup/code/meetup.dart';
@@ -25,10 +26,12 @@ class _PresentationListState extends State<PresentationList> {
 
   PageController pager = new PageController();
   PresentationListModel model;
+
   @override
   void initState() {
     super.initState();
-    model = new PresentationListModel(presentation: widget.presentation, meetup: widget.meetup);
+    model = new PresentationListModel(
+        presentation: widget.presentation, meetup: widget.meetup);
     model.currentOrderStream();
   }
 
@@ -40,11 +43,12 @@ class _PresentationListState extends State<PresentationList> {
 
   @override
   Widget build(BuildContext context) {
+    Size screenSize = MediaQuery.of(context).size;
     return StreamBuilder(
       stream: Firestore.instance.collection("meetups")
           .document(widget.meetup.id).collection("presentations")
           .document(widget.presentation.id).collection("timelinePages")
-          .orderBy("order", descending: true).snapshots(),
+          .orderBy("order", descending: false).snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasData) {
           if (snapshot.data.documents.length == 0) {
@@ -55,23 +59,30 @@ class _PresentationListState extends State<PresentationList> {
                 model: model,
                 child: ScopedModelDescendant<PresentationListModel>(
                   builder: (context, child, model) {
-                    return PageView.builder(
-                      controller: model.pageController,
-                      itemCount: snapshot.data.documents.length,
-                      pageSnapping: true,
-                      itemBuilder: (BuildContext context, int index) {
-                        if (model.showErrorMessage) {
-                          return Center(
-                              child: Text("Error retrieving data, try again!"));
-                        } else if (model.showTimeline) {
-                          TimelinePage page = TimelinePage.fromMap(
-                              snapshot.data.documents[index].data,
-                              snapshot.data.documents[index].documentID);
-                          return PresentationTile(timelinePage: page);
-                        }
-                        return Center(child: Text("Pading"));
-                      },
-                    );
+                    if (model.showErrorMessage) {
+                      return Center(
+                          child: Text("Error retrieving data, try again!"));
+                    } else if (model.showTimeline) {
+                      model.slider =  CarouselSlider(
+                          items: snapshot.data.documents.map((dc) {
+                            return new Builder(
+                              builder: (BuildContext context) {
+                                TimelinePage page = TimelinePage.fromMap(
+                                    dc.data,
+                                    dc.documentID);
+                                return  PresentationTile(timelinePage: page);
+                              },
+                            );
+                          }).toList(),
+                          initialPage: 0,
+                          aspectRatio: 0.8,
+                          reverse: false
+                      );
+                      return Center(
+                        child: model.slider
+                      );
+                    }
+                    return Center(child: Text("Error"),);
                   },
                 )
             );
@@ -93,22 +104,24 @@ class PresentationListModel extends Model {
   bool showErrorMessage = false;
   bool showTimeline = false;
   List<TimelinePage> pages = new List();
-  PageController pageController;
+  CarouselSlider slider;
   Stream stream;
   StreamSubscription subscription;
 
-  PresentationListModel({@required this.presentation, @required this.meetup}) {
-    pageController = new PageController();
-  }
+  PresentationListModel({@required this.presentation, @required this.meetup});
 
   void changePagerPage(int page) {
     print("Changing pager page to: $page");
-    pageController.animateToPage(
-        page, duration: Duration(seconds: 1), curve: Curves.bounceOut);
+    if(slider!=null) {
+      slider.animateToPage(
+          page, duration: Duration(milliseconds: 350), curve: Curves.easeIn);
+    }else{
+      print("Slider is null");
+    }
   }
 
   void dispose() {
-    pageController.dispose();
+    slider.pageController.dispose();
     subscription.cancel();
   }
 
@@ -125,6 +138,7 @@ class PresentationListModel extends Model {
       }
       if (!showTimeline) {
         showTimeline = true;
+        notifyListeners();
       }
     });
     subscription.onError((error) {
