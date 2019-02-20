@@ -79,13 +79,20 @@ class _PresentationTileState extends State<PresentationTile> {
                       fontWeight: widget.timelinePage.textOneBold ? FontWeight
                           .bold : FontWeight.normal
                   )
+              ),
+              Text(widget.timelinePage.textTwo,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: widget.timelinePage.textTwoSize,
+                      fontWeight: widget.timelinePage.textTwoBold ? FontWeight
+                          .bold : FontWeight.normal
+                  )
               )
             ],
           ),
         ),
       );
-    } else
-    if (widget.timelinePage.timelineType == TimelinePage.TopFMiddleTBottomT) {
+    } else if (widget.timelinePage.timelineType == TimelinePage.TopFMiddleTBottomT) {
       return Card(
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20.0)),
@@ -179,21 +186,50 @@ class _PresentationTileState extends State<PresentationTile> {
           ),
         ),
       );
-    }else if(widget.timelinePage.timelineType == TimelinePage.TopIMiddleI){
+    } else if (widget.timelinePage.timelineType == TimelinePage.TopIMiddleI) {
       return Card(
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20.0)),
-          child: Container(
+        child: Container(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
               CachedNetworkImage(
                 imageUrl: widget.timelinePage.imageOne,
+                placeholder: Center(child: CircularProgressIndicator(),),
               ),
               CachedNetworkImage(
                 imageUrl: widget.timelinePage.imageTwo,
+                placeholder: Center(child: CircularProgressIndicator(),),
               )
+            ],
+          ),
+        ),
+      );
+    } else if(widget.timelinePage.timelineType == TimelinePage.TopIMiddleT){
+      return Card(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0)),
+        child: Container(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              CachedNetworkImage(
+                imageUrl: widget.timelinePage.imageOne,
+                placeholder: Center(child: CircularProgressIndicator(),),
+              ),
+              Container(
+                child: Text(
+                  widget.timelinePage.textOne,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: widget.timelinePage.textOneSize,
+                      fontWeight: widget.timelinePage.textOneBold ? FontWeight
+                          .bold : FontWeight.normal),
+                ),
+              ),
             ],
           ),
         ),

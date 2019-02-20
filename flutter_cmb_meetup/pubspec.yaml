@@ -53,6 +53,10 @@ flutter:
    - images/presentation_one/cmb_logo.nma
    - images/presentation_one/androidvsios.flr
    - images/presentation_one/hybrid_frameworks.flr
+   - images/presentation_one/gears.flr
+   - images/presentation_one/running.png
+   - images/presentation_one/running.nma
+   - images/presentation_one/bag_bounce.flr
 
 
 
