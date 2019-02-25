@@ -39,7 +39,8 @@ class _PresentationTileState extends State<PresentationTile> {
                           .bold : FontWeight.normal
                   )
               ),
-              Padding(
+              Container(
+                  height: screenSize.height/4,
                   padding: const EdgeInsets.all(0.0),
                   child: CachedNetworkImage(
                     imageUrl: widget.timelinePage.imageOne,
@@ -227,6 +228,40 @@ class _PresentationTileState extends State<PresentationTile> {
                   style: TextStyle(
                       fontSize: widget.timelinePage.textOneSize,
                       fontWeight: widget.timelinePage.textOneBold ? FontWeight
+                          .bold : FontWeight.normal),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    } else if(widget.timelinePage.timelineType == TimelinePage.TopTBottomT){
+      return Card(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0)),
+        child: Container(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              Container(
+                child: Text(
+                  widget.timelinePage.textOne,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: widget.timelinePage.textOneSize,
+                      fontWeight: widget.timelinePage.textOneBold ? FontWeight
+                          .bold : FontWeight.normal),
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.all(20.0),
+                child: Text(
+                  widget.timelinePage.textTwo,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: widget.timelinePage.textTwoSize,
+                      fontWeight: widget.timelinePage.textTwoBold ? FontWeight
                           .bold : FontWeight.normal),
                 ),
               ),

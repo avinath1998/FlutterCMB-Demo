@@ -10,6 +10,9 @@ class TimelinePage {
   static final String MiddleFMiddleT = "MiddleFMiddleT";
   static final String TopIMiddleI = "TopIMiddleI";
   static final String TopIMiddleT = "TopIMiddleT";
+  static final String TopTBottomT = "TopTBottomT";
+  static final String TopTListT = "TopTListT";
+
 
   String _id;
   int _order;

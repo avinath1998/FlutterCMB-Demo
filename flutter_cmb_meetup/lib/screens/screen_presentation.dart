@@ -111,6 +111,7 @@ class _ScreenPresentationState extends State<ScreenPresentation> {
   Widget build(BuildContext context) {
     return ScopedModel(
       model: model,
+
       child: ScopedModelDescendant<ScreenPresentationModel>(
           builder: (context, child, model) {
             if (model.showPresentationList) {
