@@ -11,7 +11,7 @@ class TimelinePage {
   static final String TopIMiddleI = "TopIMiddleI";
   static final String TopIMiddleT = "TopIMiddleT";
   static final String TopTBottomT = "TopTBottomT";
-  static final String TopTListT = "TopTListT";
+  static final String TopTMiddleL = "TopTMiddleL";
 
 
   String _id;
@@ -32,9 +32,15 @@ class TimelinePage {
   bool _textOneBold;
   bool _textTwoBold;
   bool _textThreeBold;
+  List<dynamic> _textList;
+
+  TimelinePage(){
+    _textList = new List();
+  }
 
   static TimelinePage fromMap(Map<String, dynamic> map, String id){
     TimelinePage page = new TimelinePage();
+    page._textList = map['textList'];
     page.id = id;
     page.order = map['order'];
     page.timelineType = map['timelineType'];
@@ -56,6 +62,12 @@ class TimelinePage {
     return page;
   }
 
+
+  List<dynamic> get textList => _textList;
+
+  set textList(List<dynamic> value) {
+    _textList = value;
+  }
 
   bool get textOneBold => _textOneBold;
 

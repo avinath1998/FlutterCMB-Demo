@@ -43,7 +43,9 @@ class _PresentationListState extends State<PresentationList> {
 
   @override
   Widget build(BuildContext context) {
-    Size screenSize = MediaQuery.of(context).size;
+    Size screenSize = MediaQuery
+        .of(context)
+        .size;
     return StreamBuilder(
       stream: Firestore.instance.collection("meetups")
           .document(widget.meetup.id).collection("presentations")
@@ -63,23 +65,52 @@ class _PresentationListState extends State<PresentationList> {
                       return Center(
                           child: Text("Error retrieving data, try again!"));
                     } else if (model.showTimeline) {
-                      model.slider =  CarouselSlider(
+                      model.slider = CarouselSlider(
                           items: snapshot.data.documents.map((dc) {
                             return new Builder(
                               builder: (BuildContext context) {
                                 TimelinePage page = TimelinePage.fromMap(
                                     dc.data,
                                     dc.documentID);
-                                return  PresentationTile(timelinePage: page);
+                                return Padding(
+                                  padding: const EdgeInsets.only(top: 20.0, bottom: 5.0),
+                                  child: PresentationTile(timelinePage: page),
+                                );
                               },
                             );
                           }).toList(),
                           initialPage: 0,
-                          aspectRatio: 0.8,
+                          aspectRatio: MediaQuery
+                              .of(context)
+                              .orientation == Orientation.portrait
+                              ? 0.8
+                              : screenSize.width / screenSize.height,
                           reverse: false
                       );
-                      return Center(
-                        child: model.slider
+                      return Container(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: <Widget>[
+                            Expanded(
+                              child: Container(
+                                child: model.slider,
+                                width: screenSize.width,
+                              ),
+                            ), Container(
+                              margin: const EdgeInsets.only(bottom: 10.0),
+                                child: Column(
+                                  children: <Widget>[
+                                    Text("Presented by Colombo Flutter Community",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),),
+                                    Text(
+                                        "#flutterCMB"
+                                    ),
+                                  ],
+                                ),
+                              ),
+                          ],
+                        ),
                       );
                     }
                     return Center(child: Text("Error"),);
@@ -112,10 +143,10 @@ class PresentationListModel extends Model {
 
   void changePagerPage(int page) {
     print("Changing pager page to: $page");
-    if(slider!=null) {
+    if (slider != null) {
       slider.animateToPage(
           page, duration: Duration(milliseconds: 350), curve: Curves.easeIn);
-    }else{
+    } else {
       print("Slider is null");
     }
   }
